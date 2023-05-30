@@ -1,1 +1,1 @@
-Example file to select for Caesar Cipher encoding. !@#$%^&*()
+Example file to select for Caesar Cipher encoding.

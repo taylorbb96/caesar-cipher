@@ -61,8 +61,6 @@ def encode(root, encode_text):
 
         input_index+=1
 
-    print(output_str)
-
     with open('encoded.txt','w') as output_file:
         output_file.write(output_str)
 
@@ -75,6 +73,65 @@ def encode(root, encode_text):
 
 def decode(root, decode_text):
     decode_text.set("loading...")
+
+    input_text = read_file(root)
+
+    if not input_text:
+        error_win = tk.Toplevel(root)
+        error_win.geometry("500x200")
+        error_win.title('Error')
+        tk.Label(error_win, text="Failed to Decode\n Either the file contains no valid data, or no file was selected",font="Raleway").place(x=5,y=80)
+        decode_text.set("Decode")
+        return
+
+    mp.dps = len(input_text) + 1
+    key = str(mp.pi)
+    key = key.replace('.','')
+    key_list = []
+
+    for char in key:
+        key_list.append(int(char))
+
+    upper_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    input_index = 0
+    is_lower = False
+
+    output_str = ''
+
+    for char in input_text:
+        if char not in upper_alphabet and char not in upper_alphabet.lower():
+            output_str += char
+            input_index+=1
+            continue
+        elif char in upper_alphabet:
+            char_index = upper_alphabet.index(char)
+        elif char in upper_alphabet.lower():
+            char_index = upper_alphabet.lower().index(char)
+            is_lower = True
+
+        decoded_index = char_index - key_list[input_index]
+
+        if decoded_index < 0:
+            decoded_index += 26
+
+        decoded_char = upper_alphabet[decoded_index]
+
+        if is_lower:
+            is_lower = False
+            decoded_char = decoded_char.lower()
+
+        output_str += decoded_char
+
+        input_index+=1
+
+    with open('decoded.txt','w') as output_file:
+        output_file.write(output_str)
+
+    response = tk.Toplevel(root)
+    response.geometry("500x200")
+    response.title('Success')
+    response_text = tk.Label(response, text="Selected File Decoded",font="Raleway").place(x=150,y=80)
 
     decode_text.set("Decode")
 
