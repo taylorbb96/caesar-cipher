@@ -11,23 +11,51 @@ def encode(root, browse_text):
     browse_text.set("loading...")
     input_text = read_file(root)
     mp.dps = len(input_text) + 1
-    key_str = str(mp.pi)
-    key = []
+    key = str(mp.pi)
+    key = key.replace('.','')
+    key_list = []
 
-    #remove decimal
-    for char in key_str:
-        if char != '.':
-            key.append(char)
-        continue
+    for char in key:
+        key_list.append(int(char))
 
-    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    upper_alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    upper_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+    input_index = 0
+    is_lower = False
+
+    output_str = ''
 
     for char in input_text:
-        if char not in alphabet and lower(char) not in alphabet:
+        if char not in upper_alphabet and char not in upper_alphabet.lower():
+            output_str += char
+            input_index+=1
             continue
-        elif char not in alphabet
+        elif char in upper_alphabet:
+            char_index = upper_alphabet.index(char)
+        elif char in upper_alphabet.lower():
+            char_index = upper_alphabet.lower().index(char)
+            is_lower = True
+
+        encoded_index = char_index + key_list[input_index]
+
+        if encoded_index > 25:
+            encoded_index -= 26
+
+        encoded_char = upper_alphabet[encoded_index]
+
+        if is_lower:
+            is_lower = False
+            encoded_char = encoded_char.lower()
+
+        print(f'Key is {key_list[input_index]}')
+
+        output_str += encoded_char
+
+        input_index+=1
+
+    print(output_str)
+
+        
 
     browse_text.set("Browse")
 
