@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter.filedialog import askopenfile
 from mpmath import mp
 
@@ -7,9 +8,18 @@ def read_file(root):
         if file:
             return file.read()
 
-def encode(root, browse_text):
-    browse_text.set("loading...")
+def encode(root, encode_text):
+    encode_text.set("loading...")
     input_text = read_file(root)
+
+    if not input_text:
+        error_win = tk.Toplevel(root)
+        error_win.geometry("500x200")
+        error_win.title('Error')
+        tk.Label(error_win, text="Failed to Encode\n Either the file contains no valid data, or no file was selected",font="Raleway").place(x=5,y=80)
+        encode_text.set("Encode")
+        return
+
     mp.dps = len(input_text) + 1
     key = str(mp.pi)
     key = key.replace('.','')
@@ -56,7 +66,17 @@ def encode(root, browse_text):
     with open('encoded.txt','w') as output_file:
         output_file.write(output_str)
 
-    browse_text.set("Browse")
+    response = tk.Toplevel(root)
+    response.geometry("500x200")
+    response.title('Success')
+    response_text = tk.Label(response, text="Selected File Encoded",font="Raleway").place(x=150,y=80)
+
+    encode_text.set("Encode")
+
+def decode(root, decode_text):
+    decode_text.set("loading...")
+
+    decode_text.set("Decode")
 
 def main():
     root = tk.Tk()
@@ -68,15 +88,15 @@ def main():
     instructions.grid(columnspan=3, column=0, row=0)
 
     #browse button
-    browse_text = tk.StringVar()
-    browse_btn = tk.Button(root, textvariable=browse_text, command=lambda:encode(root, browse_text), font="Raleway", bg="#20bebe", fg="white", height=2, width=15)
-    browse_text.set("Browse")
-    browse_btn.grid(column=1, row=1)
+    encode_text = tk.StringVar()
+    encode_btn = tk.Button(root, textvariable=encode_text, command=lambda:encode(root, encode_text), font="Raleway", bg="#20bebe", fg="white", height=2, width=15)
+    encode_text.set("Encode")
+    encode_btn.grid(column=1, row=1)
 
-    browse_text = tk.StringVar()
-    browse_btn = tk.Button(root, textvariable=browse_text, command=lambda:encode(root, browse_text), font="Raleway", bg="#20bebe", fg="white", height=2, width=15)
-    browse_text.set("Browse")
-    browse_btn.grid(column=1, row=2)
+    decode_text = tk.StringVar()
+    decode_btn = tk.Button(root, textvariable=decode_text, command=lambda:decode(root, decode_text), font="Raleway", bg="#20bebe", fg="white", height=2, width=15)
+    decode_text.set("Decode")
+    decode_btn.grid(column=1, row=2)
 
     canvas = tk.Canvas(root, width=600, height=250)
     canvas.grid(columnspan=3)
