@@ -21,13 +21,13 @@ def encode(root, browse_text):
         continue
 
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    upper_alphabet = upper(alphabet)
+    upper_alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 
-    # for char in input_text:
-    #     if char not in alphabet and lower(char) not in alphabet:
-    #         continue
-    #     elif char not in alphabet
+    for char in input_text:
+        if char not in alphabet and lower(char) not in alphabet:
+            continue
+        elif char not in alphabet
 
     browse_text.set("Browse")
 
