@@ -81,7 +81,7 @@ def decode(root, decode_text):
 def main():
     root = tk.Tk()
 
-    canvas = tk.Canvas(root, width=600, height=300)
+    canvas = tk.Canvas(root, width=650, height=300)
     canvas.grid(columnspan=3, rowspan=3)
 
     instructions = tk.Label(root, text="Select whether you would like to encode or decode a file, then select that file", font="Raleway")
