@@ -47,15 +47,14 @@ def encode(root, browse_text):
             is_lower = False
             encoded_char = encoded_char.lower()
 
-        print(f'Key is {key_list[input_index]}')
-
         output_str += encoded_char
 
         input_index+=1
 
     print(output_str)
 
-        
+    with open('encoded.txt','w') as output_file:
+        output_file.write(output_str)
 
     browse_text.set("Browse")
 
